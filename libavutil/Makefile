@@ -90,6 +90,9 @@ HEADERS = adler32.h                                                     \
           tea.h                                                         \
           tx.h                                                          \
           film_grain_params.h                                           \
+          thread.h                                                      \
+
+HEADERS-$(CONFIG_LZO)                   += lzo.h
 
 ARCH_HEADERS = bswap.h                                                  \
                intmath.h                                                \
