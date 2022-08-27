@@ -8540,9 +8540,10 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
     int64_t pos = avio_tell(s->pb);
     for (i = 0; i < s->nb_streams; i++) {
         AVStream *avst = s->streams[i];
+        FFStream *const avsti = ffstream(avst);
         MOVStreamContext *msc = avst->priv_data;
-        if (msc->pb && msc->current_sample < avst->nb_index_entries) {
-            AVIndexEntry *current_sample = &avst->index_entries[msc->current_sample];
+        if (msc->pb && msc->current_sample < avsti->nb_index_entries) {
+            AVIndexEntry *current_sample = &avsti->index_entries[msc->current_sample];
             int64_t dts = av_rescale(current_sample->timestamp, AV_TIME_BASE, msc->time_scale);
             av_log(s, AV_LOG_TRACE, "stream %d, sample %d, dts %"PRId64"\n", i, msc->current_sample, dts);
             if (!best_dts_sample || (!(s->pb->seekable & AVIO_SEEKABLE_NORMAL) && current_sample->pos < best_dts_sample->pos) ||

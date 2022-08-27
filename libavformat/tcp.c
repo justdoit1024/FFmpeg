@@ -449,7 +449,8 @@ static int tcp_open(URLContext *h, const char *uri, int flags)
 
     fd = ff_socket(cur_ai->ai_family,
                    cur_ai->ai_socktype,
-                   cur_ai->ai_protocol);
+                   cur_ai->ai_protocol,
+                   h);
     if (fd < 0) {
         ret = ff_neterrno();
         goto fail;
@@ -469,7 +470,7 @@ static int tcp_open(URLContext *h, const char *uri, int flags)
 
     if (s->listen == 2) {
         // multi-client
-        if ((ret = ff_listen(fd, cur_ai->ai_addr, cur_ai->ai_addrlen)) < 0)
+        if ((ret = ff_listen(fd, cur_ai->ai_addr, cur_ai->ai_addrlen, h)) < 0)
             goto fail1;
     } else if (s->listen == 1) {
         // single client
@@ -640,7 +641,8 @@ static int tcp_fast_open(URLContext *h, const char *http_request, const char *ur
 #endif
     fd = ff_socket(cur_ai->ai_family,
                    cur_ai->ai_socktype,
-                   cur_ai->ai_protocol);
+                   cur_ai->ai_protocol,
+                   h);
     if (fd < 0) {
         ret = ff_neterrno();
         goto fail;
@@ -655,7 +657,7 @@ static int tcp_fast_open(URLContext *h, const char *http_request, const char *ur
     }
     if (s->listen == 2) {
         // multi-client
-        if ((ret = ff_listen(fd, cur_ai->ai_addr, cur_ai->ai_addrlen)) < 0)
+        if ((ret = ff_listen(fd, cur_ai->ai_addr, cur_ai->ai_addrlen, h)) < 0)
             goto fail1;
     } else if (s->listen == 1) {
         // single client
