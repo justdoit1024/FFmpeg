@@ -447,6 +447,8 @@ typedef struct AVPacketList {
  */
 #define AV_PKT_FLAG_DISPOSABLE 0x0010
 
+#define AV_PKT_FLAG_NEW_SEG 0x8000 ///< The packet is the first packet from a source in concat
+
 enum AVSideDataParamChangeFlags {
 #if FF_API_OLD_CHANNEL_LAYOUT
     /**
