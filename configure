@@ -6180,7 +6180,7 @@ if ! disabled network; then
 
     check_type netdb.h "struct addrinfo"
     check_type netinet/in.h "struct group_source_req" -D_BSD_SOURCE
-    check_type netinet/in.h "struct ip_mreq_source" -D_BSD_SOURCE
+    #check_type netinet/in.h "struct ip_mreq_source" -D_BSD_SOURCE //fix build error
     check_type netinet/in.h "struct ipv6_mreq" -D_DARWIN_C_SOURCE
     check_type poll.h "struct pollfd"
     check_type netinet/sctp.h "struct sctp_event_subscribe"
